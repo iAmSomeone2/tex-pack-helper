@@ -1,4 +1,4 @@
-# tex-pack-helper
+# texpackhelper
 A selection of tools written in Go for helping with the generation and post-processing of neural network-enhanced video game textures.
 
 ## Purpose
@@ -15,12 +15,12 @@ Using neural networks such as waifu2x is becomming a popular way to breath new l
   </ul>
 </ul>
 
-### Solutions Provided by tex-pack-helper
+### Solutions Provided by texpackhelper
 * It can automatically make a list of the files to use in the neural net.
 * Output files are analyzed and reclassified based on common output issues.
 
 ## Important Notes
-* tex-pack-helper is still in extremely early development.
+* texpackhelper is still in extremely early development.
 * User-friendliness will improve as the project progresses.
 
 ## In Progress
