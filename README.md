@@ -22,3 +22,8 @@ Using neural networks such as waifu2x is becomming a popular way to breath new l
 ## Important Notes
 * tex-pack-helper is still in extremely early development.
 * User-friendliness will improve as the project progresses.
+
+## In Progress
+* Instructions on how to install the software
+* Instructions on how to contribute
+* Image analysis feature
