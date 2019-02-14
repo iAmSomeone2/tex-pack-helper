@@ -21,6 +21,11 @@ parts:
     source: https://github.com/iAmSomeone2/texpackhelper.git
     go-importpath: github.com/iAmSomeone2/texpackhelper
     source-type: git
+    source-depth: 1
+    source-branch: image
+    build-packages: [
+      libmagickwand-dev
+    ]
 
 apps:
   texpackhelper:

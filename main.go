@@ -12,8 +12,11 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"path"
 	"strings"
 
+	"github.com/iAmSomeone2/texpackhelper/imageproc"
 	"github.com/iAmSomeone2/texpackhelper/list"
 )
 
@@ -23,6 +26,10 @@ func main() {
 	const recursiveFlagDesc string = "Set this flag to traverse all files in the directory."
 	const extFlagDesc string = "Only lists the files with the specified file extensions.\nMultiple extensions can be separated with ','"
 
+	// Get relevant env variables
+	homeDir := os.Getenv("$HOME")
+	workDir := os.Getenv("$PWD")
+
 	// All flag pointers must be dereferenced to be used
 	directoryPtr := flag.String("dir", "./", "The directory to make the list for.")
 	recursiveTruePtr := flag.Bool("recursive", false, recursiveFlagDesc)
@@ -31,12 +38,22 @@ func main() {
 
 	flag.Parse()
 
-	fmt.Println("\nReading from: " + *directoryPtr + "\n")
+	// TODO: If the directory arg is not set, join into the current path
+	var fullPath string
+	if *directoryPtr == "./" {
+		fullPath = workDir
+	} else if !path.IsAbs(*directoryPtr) {
+		fullPath = path.Join(workDir, *directoryPtr)
+	} else {
+		fullPath = *directoryPtr
+	}
+
+	fmt.Println("\nReading from: " + fullPath + "\n")
 
 	fmt.Println("Working...")
 	// Get all of the files in a slice
-	foundFiles := list.TraverseFolder(*directoryPtr, *recursiveTruePtr)
-	// If the ext flag is set, filer out everything that doesn't match it
+	foundFiles := list.TraverseFolder(fullPath, *recursiveTruePtr)
+	// If the ext flag is set, filter out everything that doesn't match it
 	if *extPtr != "" {
 		// Run filter function
 		exts := strings.Split(*extPtr, ",")
@@ -51,4 +68,16 @@ func main() {
 	}
 
 	fmt.Println("\nAll found files are listed in: " + *fileNamePtr)
+
+	// TODO: Call waifu2x from here to simplify the process.
+
+	// TODO: Create a preset system with dolphin-emu being the default.
+
+	/*
+		Now, a list of all of the files that were output from from the enhancer
+		needs to be created.
+		For now, it's assumed to be the default dolphin-emu texture load folder.
+		Don't forget to change the work directory as needed.
+	*/
+
 }
