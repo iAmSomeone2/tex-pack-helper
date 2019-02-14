@@ -1,6 +1,9 @@
 # texpackhelper
 A selection of tools written in Go for helping with the generation and post-processing of neural network-enhanced video game textures.
 
+### Build Status
+[![Snap Status](https://build.snapcraft.io/badge/iAmSomeone2/texpackhelper.svg)](https://build.snapcraft.io/user/iAmSomeone2/texpackhelper)
+
 ## Purpose
 Using neural networks such as waifu2x is becomming a popular way to breath new life into older games by upscaling those textures so that they look much better at higher resolutions. This process isn't perfect, however, and could benefit from additional automation. 
 
