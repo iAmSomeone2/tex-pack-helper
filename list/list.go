@@ -42,11 +42,11 @@ func WriteList(fileName string, namesToWrite []string) error {
 
 	if _, err := os.Stat(fileName); err == nil {
 		// The file exists and there were no errors.
-		fmt.Println("\n" + fileName + " was found. Replacing with a new version...")
+		fmt.Println("\n" + fileName + " was found.\nReplacing with a new version...")
 		os.Remove(fileName)
 	} else {
 		// The system can't determine if the file exists or not
-		fmt.Println("\n" + fileName + " couldn't be found. Creating...")
+		fmt.Println("\n" + fileName + " couldn't be found.\nCreating...")
 		// return err
 	}
 

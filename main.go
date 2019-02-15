@@ -18,27 +18,29 @@ import (
 
 	"github.com/iAmSomeone2/texpackhelper/imageproc"
 	"github.com/iAmSomeone2/texpackhelper/list"
+	// "github.com/iAmSomeone2/texpackhelper/preset"
 )
 
 func main() {
 	// String constants for the command-line flags
+
 	const fileFlagDesc string = "The destination of the output file."
 	const recursiveFlagDesc string = "Set this flag to traverse all files in the directory."
 	const extFlagDesc string = "Only lists the files with the specified file extensions.\nMultiple extensions can be separated with ','"
 
 	// Get relevant env variables
-	homeDir := os.Getenv("$HOME")
-	workDir := os.Getenv("$PWD")
+	// homeDir := os.Getenv("HOME")
+	workDir := os.Getenv("PWD")
 
 	// All flag pointers must be dereferenced to be used
 	directoryPtr := flag.String("dir", "./", "The directory to make the list for.")
 	recursiveTruePtr := flag.Bool("recursive", false, recursiveFlagDesc)
-	fileNamePtr := flag.String("out", "./file_list.txt", fileFlagDesc)
-	extPtr := flag.String("ext", "", extFlagDesc) // Read through this flag to get comma separated values
+	fileNamePtr := flag.String("out", "file_list.txt", fileFlagDesc)
+	extPtr := flag.String("ext", ".png", extFlagDesc) // Read through this flag to get comma separated values
 
 	flag.Parse()
 
-	// TODO: If the directory arg is not set, join into the current path
+	// If the directory arg is not set, join into the current path
 	var fullPath string
 	if *directoryPtr == "./" {
 		fullPath = workDir
@@ -47,6 +49,8 @@ func main() {
 	} else {
 		fullPath = *directoryPtr
 	}
+
+	fileName := path.Join(fullPath, *fileNamePtr)
 
 	fmt.Println("\nReading from: " + fullPath + "\n")
 
@@ -62,19 +66,25 @@ func main() {
 		foundFiles = list.FilterExt(exts, foundFiles)
 	}
 
-	err := list.WriteList(*fileNamePtr, foundFiles)
+	err := list.WriteList(fileName, foundFiles)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("\nAll found files are listed in: " + *fileNamePtr)
+	fmt.Println("\nAll found files are listed in: " + fileName + "\n")
 
 	// TODO: Call waifu2x from here to simplify the process.
+	waifu := imageproc.NewWaifu2x()
+	waifu.SetListPath(fileName)
+	waifuErr := waifu.Run()
+	if waifuErr != nil {
+		// log.Fatal(err)
+	}
 
 	// TODO: Create a preset system with dolphin-emu being the default.
 
 	/*
-		Now, a list of all of the files that were output from from the enhancer
+		Now, a list of all of the files that were output from the enhancer
 		needs to be created.
 		For now, it's assumed to be the default dolphin-emu texture load folder.
 		Don't forget to change the work directory as needed.

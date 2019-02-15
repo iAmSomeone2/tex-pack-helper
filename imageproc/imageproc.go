@@ -40,22 +40,20 @@ func Begin(imageList []string) {
 		log.Printf("Output dir: '%s' already exists.\n", maskDir)
 	} else {
 		// Folder not found. It must be created.
-		dir, createErr := os.Create(maskDir)
+		createErr := os.MkdirAll(maskDir, os.ModePerm)
 		if createErr != nil {
 			log.Fatal(createErr)
 		}
-		dir.Close()
 	}
 	if _, err := os.Stat(solidDir); err == nil {
 		// Folder found. Nothing needs to be done.
 		log.Printf("Output dir: '%s' already exists.\n", solidDir)
 	} else {
 		// Folder not found. It must be created.
-		dir, createErr := os.Create(solidDir)
+		createErr := os.MkdirAll(solidDir, os.ModePerm)
 		if createErr != nil {
 			log.Fatal(createErr)
 		}
-		dir.Close()
 	}
 
 	/*

@@ -30,3 +30,6 @@ parts:
 apps:
   texpackhelper:
     command: bin/texpackhelper
+  plugs: [
+    :home
+  ]
